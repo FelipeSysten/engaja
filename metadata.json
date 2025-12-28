@@ -1,0 +1,8 @@
+{
+  "name": "Engaja+",
+  "description": "Uma plataforma de visibilidade colaborativa inteligente para Instagram, focada em engajamento real e orgânico através de ações humanas.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
