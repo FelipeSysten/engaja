@@ -7,17 +7,38 @@ const Pricing: React.FC<{ user: User, setUser?: (u: User) => void }> = ({ user }
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
   const [isRedirecting, setIsRedirecting] = useState(false);
 
-  const handleCheckout = () => {
-    if (!selectedItem?.checkoutUrl) return;
-    setIsRedirecting(true);
-    
-    // Injeta os dados do usuário no link de pagamento para identificação posterior
-    const finalUrl = selectedItem.checkoutUrl
-      .replace('{EMAIL}', encodeURIComponent(user.id)) // Usando o email/id como referência
-      .replace('{USER_ID}', encodeURIComponent(user.id));
-    
-    window.location.assign(finalUrl);
-  };
+const handleCheckout = async () => {
+  if (!selectedItem?.stripeProductId) return; // Agora usamos o ID do produto/preço
+  setIsRedirecting(true);
+  
+  try {
+    // Faz a chamada para o SEU servidor
+    const response = await fetch('http://localhost:4242/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        priceId: selectedItem.stripeProductId, // Passa o ID do Stripe
+        userId: user.id,
+      
+      } ),
+    });
+
+    const data = await response.json();
+
+    if (data.url) {
+      // Redireciona para a URL gerada pelo servidor
+      window.location.assign(data.url);
+    } else {
+      throw new Error(data.error || 'Erro ao criar sessão');
+    }
+  } catch (error) {
+    console.error('Erro no checkout:', error);
+    alert('Erro ao iniciar pagamento. Verifique se o servidor está rodando.');
+    setIsRedirecting(false);
+  }
+};
 
   return (
     <div className="max-w-6xl mx-auto space-y-16 animate-in fade-in duration-1000">
@@ -56,7 +77,7 @@ const Pricing: React.FC<{ user: User, setUser?: (u: User) => void }> = ({ user }
             </ul>
 
             <button 
-              disabled={user.plan === plan.id || !plan.checkoutUrl}
+              disabled={user.plan === plan.id || !plan.stripeProductId}
               onClick={() => setSelectedItem(plan)}
               className={`w-full py-5 rounded-2xl font-black text-sm transition-all ${
                 user.plan === plan.id 

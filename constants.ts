@@ -1,4 +1,3 @@
-
 import { UserPlan, TaskType } from './types';
 
 export const POINTS_EARNED = {
@@ -19,61 +18,68 @@ export const PLAN_LIMITS = {
   [UserPlan.ELITE]: Infinity,
 };
 
-// URLs reais de checkout (Links de Pagamento do Stripe)
-// Em produção, você substituiria pelos links gerados no seu painel Stripe
-const BASE_STRIPE_URL = "https://buy.stripe.com/test_"; 
+// IDs dos produtos fornecidos pelo usuário
+export const STRIPE_PRODUCT_IDS = {
+  PLANO_PRO: 'price_1SjS6DECuhLW00E55DtzQJpg',
+  PLANO_ELITE: 'price_1SjS7PECuhLW00E5DdfruZpa',
+  RECARGA_1000: 'price_1SjS8gECuhLW00E5WveBv9Od',
+  RECARGA_5000: 'price_1SjS9xECuhLW00E5b2iIzWyN',
+  RECARGA_10000: 'price_1SjSJyECuhLW00E5WS3wwz33',
+  BOOST_24H: 'price_1SjSL3ECuhLW00E5nKhC9uIe',
+  BOOST_72H: 'price_1SjSLQECuhLW00E5KArGbeQ9',
+};
 
 export const PRICING = {
   PLANS: [
-    { 
-      id: UserPlan.FREE, 
-      name: 'Free', 
-      price: 0, 
+    {
+      id: UserPlan.FREE,
+      name: 'Free',
+      price: 0,
       features: ['Ações ilimitadas', 'Limite 150 pts/dia', 'Baixa prioridade'],
-      checkoutUrl: null 
+      stripeProductId: null
     },
-    { 
-      id: UserPlan.PRO, 
-      name: 'Pro', 
-      price: 39, 
+    {
+      id: UserPlan.PRO,
+      name: 'Pro',
+      price: 39,
       features: ['Limite 500 pts/dia', 'Prioridade média', 'Selo Pro'],
-      checkoutUrl: `${BASE_STRIPE_URL}6oE9C68uYg5f?prefilled_email={EMAIL}&client_reference_id={USER_ID}&success_url=${window.location.origin}/dashboard?payment=success&type=PLAN&val=PRO`
+      stripeProductId: STRIPE_PRODUCT_IDS.PLANO_PRO
     },
-    { 
-      id: UserPlan.ELITE, 
-      name: 'Elite', 
-      price: 89, 
+    {
+      id: UserPlan.ELITE,
+      name: 'Elite',
+      price: 89,
       features: ['Pontos ilimitados', 'Prioridade máxima', 'Boost mensal incluso'],
-      checkoutUrl: `${BASE_STRIPE_URL}8wM7uYg5f6oE?prefilled_email={EMAIL}&client_reference_id={USER_ID}&success_url=${window.location.origin}/dashboard?payment=success&type=PLAN&val=ELITE`
+      stripeProductId: STRIPE_PRODUCT_IDS.PLANO_ELITE
     },
   ],
   PACKS: [
-    { 
-      amount: 1000, 
-      price: 10, 
-      checkoutUrl: `${BASE_STRIPE_URL}5kAbJCdEfGhI?prefilled_email={EMAIL}&client_reference_id={USER_ID}&success_url=${window.location.origin}/dashboard?payment=success&type=POINTS&val=1000`
+    {
+      amount: 1000,
+      price: 10,
+      stripeProductId: STRIPE_PRODUCT_IDS.RECARGA_1000
     },
-    { 
-      amount: 5000, 
-      price: 45, 
-      checkoutUrl: `${BASE_STRIPE_URL}1mN2oP3qR4sT?prefilled_email={EMAIL}&client_reference_id={USER_ID}&success_url=${window.location.origin}/dashboard?payment=success&type=POINTS&val=5000`
+    {
+      amount: 5000,
+      price: 45,
+      stripeProductId: STRIPE_PRODUCT_IDS.RECARGA_5000
     },
-    { 
-      amount: 10000, 
-      price: 80, 
-      checkoutUrl: `${BASE_STRIPE_URL}9uV0wX1yZ2aB?prefilled_email={EMAIL}&client_reference_id={USER_ID}&success_url=${window.location.origin}/dashboard?payment=success&type=POINTS&val=10000`
+    {
+      amount: 10000,
+      price: 80,
+      stripeProductId: STRIPE_PRODUCT_IDS.RECARGA_10000
     },
   ],
   BOOSTS: [
-    { 
-      duration: '24h', 
-      price: 15, 
-      checkoutUrl: `${BASE_STRIPE_URL}3cD4eF5gH6hI?prefilled_email={EMAIL}&client_reference_id={USER_ID}&success_url=${window.location.origin}/dashboard?payment=success&type=BOOST&val=24h`
+    {
+      duration: '24h',
+      price: 15,
+      stripeProductId: STRIPE_PRODUCT_IDS.BOOST_24H
     },
-    { 
-      duration: '72h', 
-      price: 35, 
-      checkoutUrl: `${BASE_STRIPE_URL}7jK8lM9nO0pQ?prefilled_email={EMAIL}&client_reference_id={USER_ID}&success_url=${window.location.origin}/dashboard?payment=success&type=BOOST&val=72h`
+    {
+      duration: '72h',
+      price: 35,
+      stripeProductId: STRIPE_PRODUCT_IDS.BOOST_72H
     },
   ]
 };
