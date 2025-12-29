@@ -13,7 +13,7 @@ const handleCheckout = async () => {
   
   try {
     // Faz a chamada para o SEU servidor
-    const response = await fetch('http://localhost:4242/create-checkout-session', {
+    const response = await fetch('https://tyrone-unrecollected-heike.ngrok-free.dev/create-checkout-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
