@@ -101,7 +101,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onSignup }) => {
             <div className="absolute inset-0 bg-indigo-600/20 blur-[100px] rounded-full"></div>
             <div className="glass-effect rounded-[3rem] p-8 border border-white/10 relative z-10">
                <div className="aspect-video bg-slate-900 rounded-[2rem] overflow-hidden border border-white/5 relative group">
-                  <img src="https://images.unsplash.com/photo-1611162616485-539d8807b9ca?q=80&w=1000" className="w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" />
+                  <img src="https://i.ibb.co/9HccM9zm/Captura-de-tela-2025-12-29-040800.png" className="w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="bg-indigo-600/80 p-6 rounded-3xl backdrop-blur-md border border-white/20 text-center animate-bounce">
                       <p className="text-[10px] font-black uppercase tracking-widest mb-1">Status da Validação</p>
